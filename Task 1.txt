@@ -1,0 +1,98 @@
+import tkinter as tk
+from tkinter import messagebox
+import math
+
+# Function to update expression in the entry field
+def click_button(item):
+    global expression
+    expression += str(item)
+    input_text.set(expression)
+
+# Function to clear the entry field
+def clear():
+    global expression
+    expression = ""
+    input_text.set("")
+
+# Function to evaluate the final expression
+def equal():
+    try:
+        global expression
+        result = str(eval(expression))
+        input_text.set(result)
+        expression = result
+    except ZeroDivisionError:
+        messagebox.showerror("Error", "Division by Zero is not allowed.")
+    except:
+        messagebox.showerror("Error", "Invalid Input")
+
+# Function to calculate the square root
+def sqrt():
+    try:
+        global expression
+        result = str(math.sqrt(eval(expression)))
+        input_text.set(result)
+        expression = result
+    except ValueError:
+        messagebox.showerror("Error", "Invalid Input for Square Root")
+
+# Function to calculate exponentiation
+def exponent():
+    try:
+        global expression
+        result = str(eval(expression + "**2"))
+        input_text.set(result)
+        expression = result
+    except:
+        messagebox.showerror("Error", "Invalid Input for Exponentiation")
+
+# Main GUI setup
+root = tk.Tk()
+root.title("Simple Calculator")
+root.geometry("400x500")
+
+expression = ""
+input_text = tk.StringVar()
+
+input_frame = tk.Frame(root)
+input_frame.pack()
+
+input_field = tk.Entry(input_frame, textvariable=input_text, font=('arial', 18, 'bold'), bd=10, insertwidth=4, width=14, justify='right')
+input_field.grid(row=0, column=0)
+input_field.pack(ipady=10)
+
+buttons_frame = tk.Frame(root)
+buttons_frame.pack()
+
+# First row
+clear_button = tk.Button(buttons_frame, text='C', fg='black', width=32, height=3, bd=0, bg='#eee', cursor='hand2', command=lambda: clear()).grid(row=0, column=0, columnspan=3)
+divide_button = tk.Button(buttons_frame, text='/', fg='black', width=10, height=3, bd=0, bg='#eee', cursor='hand2', command=lambda: click_button('/')).grid(row=0, column=3)
+
+# Second row
+seven_button = tk.Button(buttons_frame, text='7', fg='black', width=10, height=3, bd=0, bg='#fff', cursor='hand2', command=lambda: click_button(7)).grid(row=1, column=0)
+eight_button = tk.Button(buttons_frame, text='8', fg='black', width=10, height=3, bd=0, bg='#fff', cursor='hand2', command=lambda: click_button(8)).grid(row=1, column=1)
+nine_button = tk.Button(buttons_frame, text='9', fg='black', width=10, height=3, bd=0, bg='#fff', cursor='hand2', command=lambda: click_button(9)).grid(row=1, column=2)
+multiply_button = tk.Button(buttons_frame, text='*', fg='black', width=10, height=3, bd=0, bg='#eee', cursor='hand2', command=lambda: click_button('*')).grid(row=1, column=3)
+
+# Third row
+four_button = tk.Button(buttons_frame, text='4', fg='black', width=10, height=3, bd=0, bg='#fff', cursor='hand2', command=lambda: click_button(4)).grid(row=2, column=0)
+five_button = tk.Button(buttons_frame, text='5', fg='black', width=10, height=3, bd=0, bg='#fff', cursor='hand2', command=lambda: click_button(5)).grid(row=2, column=1)
+six_button = tk.Button(buttons_frame, text='6', fg='black', width=10, height=3, bd=0, bg='#fff', cursor='hand2', command=lambda: click_button(6)).grid(row=2, column=2)
+subtract_button = tk.Button(buttons_frame, text='-', fg='black', width=10, height=3, bd=0, bg='#eee', cursor='hand2', command=lambda: click_button('-')).grid(row=2, column=3)
+
+# Fourth row
+one_button = tk.Button(buttons_frame, text='1', fg='black', width=10, height=3, bd=0, bg='#fff', cursor='hand2', command=lambda: click_button(1)).grid(row=3, column=0)
+two_button = tk.Button(buttons_frame, text='2', fg='black', width=10, height=3, bd=0, bg='#fff', cursor='hand2', command=lambda: click_button(2)).grid(row=3, column=1)
+three_button = tk.Button(buttons_frame, text='3', fg='black', width=10, height=3, bd=0, bg='#fff', cursor='hand2', command=lambda: click_button(3)).grid(row=3, column=2)
+add_button = tk.Button(buttons_frame, text='+', fg='black', width=10, height=3, bd=0, bg='#eee', cursor='hand2', command=lambda: click_button('+')).grid(row=3, column=3)
+
+# Fifth row
+zero_button = tk.Button(buttons_frame, text='0', fg='black', width=21, height=3, bd=0, bg='#fff', cursor='hand2', command=lambda: click_button(0)).grid(row=4, column=0, columnspan=2)
+decimal_button = tk.Button(buttons_frame, text='.', fg='black', width=10, height=3, bd=0, bg='#eee', cursor='hand2', command=lambda: click_button('.')).grid(row=4, column=2)
+equal_button = tk.Button(buttons_frame, text='=', fg='black', width=10, height=3, bd=0, bg='#eee', cursor='hand2', command=lambda: equal()).grid(row=4, column=3)
+
+# Additional functions
+sqrt_button = tk.Button(buttons_frame, text='√', fg='black', width=10, height=3, bd=0, bg='#eee', cursor='hand2', command=lambda: sqrt()).grid(row=5, column=0)
+exp_button = tk.Button(buttons_frame, text='x²', fg='black', width=10, height=3, bd=0, bg='#eee', cursor='hand2', command=lambda: exponent()).grid(row=5, column=1)
+
+root.mainloop()
